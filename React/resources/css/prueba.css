@@ -1,0 +1,14 @@
+.xddd {
+    cursor: pointer;
+    border-bottom: 2px solid;
+}
+
+.xddd-black {
+    color: black;
+    border-color: black;
+}
+
+.xddd-red {
+    color: red;
+    border-color: red;
+}

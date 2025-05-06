@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('Layouts.LayoutsPrincipal');
+    return view('home');
 });

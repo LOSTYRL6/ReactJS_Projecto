@@ -1,0 +1,169 @@
+.NavbarSouls {
+    width: 100%;
+    height: 125px;
+    background-color: #B0B0B0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: black;
+}
+
+.NavbarFixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #B0B0B0;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transform: translateY(-100%);
+    z-index: 999;
+}
+
+.FooterContenido {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    background-color: #B0B0B0;
+    color: white;
+}
+
+.Logo {
+    width: 30%;
+    height: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: solid white 1px;
+}
+
+.Logo img {
+    width: 100px;
+    height: 90%;
+}
+
+.Logo button {
+    width: 100px;
+    height: 50%;
+}
+
+.Menu {
+    width: 65%;
+    height: 80%;
+    justify-content: space-around;
+    align-items: center;
+    border: solid white 1px;
+    display: flex;
+}
+
+.MenuFixed {
+    width: 60%;
+    height: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: solid white 1px;
+}
+
+.AuthFixed {
+    width: 25%;
+    height: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: solid white 1px;
+}
+
+.BurgerMenu {
+    width: 100px;
+    height: auto;
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.burger-icon {
+    width: 30px;
+    height: 3px;
+    background-color: black;
+    position: relative;
+}
+
+.burger-icon::before,
+.burger-icon::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 3px;
+    background-color: black;
+}
+
+.burger-icon::before {
+    top: -8px;
+}
+
+.burger-icon::after {
+    top: 8px;
+}
+
+.MobileMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #B0B0B0;
+    padding: 20px;
+    position: absolute;
+    top: 125px;
+    left: 0;
+    width: 100%;
+}
+
+.MobileMenuFixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%; /* puedes usar 80% si prefieres */
+    background-color: #B0B0B0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+    display: none;
+}
+
+.CloseButton {
+    display: flex;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.CloseButton:hover {
+    background-color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .Menu {
+        display: none;
+    }
+
+    .Logo {
+        width: 70%;
+    }
+
+    .BurgerMenu {
+        display: block;
+    }
+}
