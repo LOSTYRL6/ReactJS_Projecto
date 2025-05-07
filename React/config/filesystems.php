@@ -38,11 +38,12 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => public_path('imagen/media'), // Cambia la ruta de 'storage/app/public' a 'public/media'
+            'url' => env('APP_URL') . '/imagen/media', // Esto asegura que la URL sea accesible desde la carpeta public/media
             'visibility' => 'public',
             'throw' => false,
         ],
+
 
         's3' => [
             'driver' => 's3',

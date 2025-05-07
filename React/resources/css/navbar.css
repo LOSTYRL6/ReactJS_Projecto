@@ -1,11 +1,11 @@
 .NavbarSouls {
     width: 100%;
     height: 125px;
-    background-color: #B0B0B0;
+    background-color: #1212129f;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: black;
+    color: white;
 }
 
 .NavbarFixed {
@@ -14,8 +14,8 @@
     left: 0;
     width: 100%;
     height: 100px;
-    background-color: #B0B0B0;
-    color: black;
+    background-color: #1212129f;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -27,7 +27,7 @@
     width: 100%;
     height: 250px;
     display: flex;
-    background-color: #B0B0B0;
+    background-color: #1212129f;
     color: white;
 }
 
@@ -41,6 +41,10 @@
 }
 
 .Logo img {
+    width: 100px;
+    height: 90%;
+}
+.NavbarFixed img{
     width: 100px;
     height: 90%;
 }
@@ -60,7 +64,7 @@
 }
 
 .MenuFixed {
-    width: 60%;
+    width: 90%;
     height: 90%;
     display: flex;
     justify-content: space-around;
@@ -88,7 +92,7 @@
 .burger-icon {
     width: 30px;
     height: 3px;
-    background-color: black;
+    background-color: white;
     position: relative;
 }
 
@@ -98,7 +102,7 @@
     position: absolute;
     width: 30px;
     height: 3px;
-    background-color: black;
+    background-color: white;
 }
 
 .burger-icon::before {
@@ -113,7 +117,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    background-color: #B0B0B0;
+    background-color: #1212129f;
+    color: white;
     padding: 20px;
     position: absolute;
     top: 125px;
@@ -127,7 +132,8 @@
     right: 0;
     height: 100vh;
     width: 100%; /* puedes usar 80% si prefieres */
-    background-color: #B0B0B0;
+    background-color: #121212d8;
+    color: white;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -158,12 +164,19 @@
     .Menu {
         display: none;
     }
-
+    .MenuFixed{
+        width: 30%;
+    }
+    .NavbarFixed{
+        justify-content: space-between;
+    }
     .Logo {
         width: 70%;
     }
 
     .BurgerMenu {
-        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
