@@ -3,19 +3,30 @@ import { createRoot } from "react-dom/client";
 import "../../css/prueba.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useNavigate } from 'react-router-dom';
 
 gsap.registerPlugin(useGSAP);
 
 export default function Navbar() {
+    // const navigate = useNavigate();
     const fixedNavbarRef = useRef();
     const fixedMenuRef = useRef();
+    const MenuMobileSize = useRef();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isFixedMenuOpen, setIsFixedMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+    const Registrarse = () => {
+        window.location.href = "./Registrar";  // Redirige a la ruta de Laravel
+      };
+
+    const IniciarSesion = () => {
+        window.location.href = "./Iniciar";  // Redirige a la ruta de Laravel
+      };
+
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 125) {
+            if (window.scrollY > 145) {
                 gsap.to(fixedNavbarRef.current, {
                     y: 0,
                     duration: 0.65,
@@ -23,7 +34,7 @@ export default function Navbar() {
                 });
             } else {
                 gsap.to(fixedNavbarRef.current, {
-                    y: -125,
+                    y: -145,
                     duration: 0.2,
                     ease: "power2.in",
                 });
@@ -51,31 +62,46 @@ export default function Navbar() {
         setIsFixedMenuOpen(!isFixedMenuOpen);
     };
     useEffect(() => {
-        if (isMobile) {
-            if (isFixedMenuOpen) {
-                gsap.fromTo(
-                    fixedMenuRef.current,
-                    { x: "100%" },
-                    {
-                        x: "0%",
-                        duration: 0.5,
-                        ease: "power2.out",
-                        display: "flex",
-                    }
-                );
-            } else {
-                gsap.to(fixedMenuRef.current, {
-                    x: "100%",
-                    duration: 0.4,
-                    ease: "power2.in",
-                    onComplete: () => {
-                        if (fixedMenuRef.current)
-                            fixedMenuRef.current.style.display = "none";
-                    },
-                });
+        const handleMenu = () => {
+            // Para el menú fijo en móviles
+            if (isMobile) {
+                if (isFixedMenuOpen) {
+                    gsap.fromTo(
+                        fixedMenuRef.current,
+                        { x: "100%" },
+                        {
+                            x: "0%",
+                            duration: 0.5,
+                            ease: "power2.out",
+                            display: "flex",
+                        }
+                    );
+                } else {
+                    gsap.to(fixedMenuRef.current, {
+                        x: "100%",
+                        duration: 0.4,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            if (fixedMenuRef.current)
+                                fixedMenuRef.current.style.display = "none";
+                        },
+                    });
+                }
             }
-        }
-    }, [isFixedMenuOpen, isMobile]);
+
+            // Para el menú principal (puedes agregar animación si lo deseas)
+            if (isMenuOpen) {
+                gsap.fromTo(
+                    MenuMobileSize.current,
+                    { opacity: 0.5, y: -20 },
+                    { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                );
+            }
+        };
+
+        handleMenu(); // Llamar a la función para ejecutar las animaciones
+
+    }, [isFixedMenuOpen, isMenuOpen, isMobile]);
 
     return (
         <>
@@ -83,14 +109,15 @@ export default function Navbar() {
             <nav className="NavbarSouls">
                 <div className="Logo">
                     <img src="./imagen/logo/SoulsHUBPNG.png" alt="Logo" />
-                    <button>Iniciar Sesión</button>
-                    <button>Registrarse</button>
+                    <button onClick={Registrarse}>Registrarse</button>
+                    <button onClick={IniciarSesion}>Iniciar Sesion</button>
                 </div>
 
                 {!isMobile && (
                     <div className="Menu">
                         <h1>Home</h1>
                         <h1>Sobre Nosotros</h1>
+                        <h1>Juegos</h1>
                     </div>
                 )}
 
@@ -101,9 +128,8 @@ export default function Navbar() {
                 )}
             </nav>
 
-            {/* MENÚ RESPONSIVE DEL NAVBAR PRINCIPAL */}
             {isMobile && isMenuOpen && (
-                <div className="MobileMenu">
+                <div className="MobileMenu" ref={MenuMobileSize}>
                     <h1>Home</h1>
                     <h1>Sobre Nosotros</h1>
                 </div>
@@ -111,6 +137,11 @@ export default function Navbar() {
 
             {/* NAVBAR FIJO QUE APARECE AL HACER SCROLL */}
             <nav className="NavbarFixed" ref={fixedNavbarRef}>
+
+            {isMobile &&(
+                <img src="./imagen/logo/SoulsHUBPNG.png" alt="Logo" />
+            )}
+
                 <div className="MenuFixed">
                     {!isMobile ? (
                         <>
@@ -123,13 +154,9 @@ export default function Navbar() {
                         </div>
                     )}
                 </div>
-                <div className="AuthFixed">
-                    <button>Iniciar Sesión</button>
-                    <button>Registrarse</button>
-                </div>
+
             </nav>
 
-            {/* MENÚ SLIDE-IN DEL NAVBAR FIJO */}
             <div
                 className="MobileMenuFixed"
                 ref={fixedMenuRef}

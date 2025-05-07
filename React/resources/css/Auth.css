@@ -1,0 +1,96 @@
+
+.contenedorForm {
+    position: relative;
+    width: 50%;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #b0b0b0bb;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  }
+.contenedorFormRegistrarse{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 80%;
+    flex-direction: column;
+    text-align: center;
+}
+.salirBoton{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: auto;
+    height: auto;
+}
+.salirBoton a{
+    display: flex;
+    width: 50px;
+    height: 50px;
+}
+  .FormIniciarSesion {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+    border: none;
+  }
+
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .formGroup label {
+    margin-bottom: 2px;
+    font-weight: bold;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    color: black;
+    float: left;
+    display: flex;
+  }
+
+  .formGroup input{
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  .btnEnviar {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btnEnviar:hover {
+    background-color: #45a049;
+  }
+  .tituloFuego {
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px rgba(255, 80, 0, 0.8);
+  }
+
+  @media (max-width: 800px) {
+    .contenedorForm {
+        width: 85%;
+      }
+      .contenedorFormRegistrarse{
+        width: 100%;
+    }
+}

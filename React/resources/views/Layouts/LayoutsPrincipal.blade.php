@@ -10,10 +10,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
     <title>Mi primer Componente</title>
     @viteReactRefresh
-    @vite(['resources/css/app.css', 'resources/js/app.js','resources/css/navbar.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js','resources/css/navbar.css','resources/css/Auth.css'])
 </head>
 
 <body>
+    @yield('Imagenfondo')
     <nav id="navbar"></nav> <!-- Solo uno así -->
     <main class="ContenidoMain">
         @yield('LayoustMain')

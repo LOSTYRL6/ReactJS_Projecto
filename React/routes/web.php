@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/Iniciar', function () {
+    return view('Auth.Iniciar');
+});
+
+Route::get('/Registrar', function () {
+    return view('Auth.register');
+});
