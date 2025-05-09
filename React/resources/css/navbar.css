@@ -37,14 +37,13 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border: solid white 1px;
 }
 
-.Logo img {
+.Logo .LogoImage {
     width: 100px;
     height: 90%;
 }
-.NavbarFixed img{
+.NavbarFixed img {
     width: 100px;
     height: 90%;
 }
@@ -70,6 +69,7 @@
     justify-content: space-around;
     align-items: center;
     border: solid white 1px;
+    flex-direction: row;
 }
 
 .AuthFixed {
@@ -98,7 +98,7 @@
 
 .burger-icon::before,
 .burger-icon::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 30px;
     height: 3px;
@@ -114,7 +114,7 @@
 }
 
 .MobileMenu {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 20px;
     background-color: #1212129f;
@@ -158,25 +158,35 @@
 .CloseButton:hover {
     background-color: #ccc;
 }
+.categoriaMenu {
+    width: 90%;
+    height: auto;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
     .Menu {
         display: none;
     }
-    .MenuFixed{
+    .MenuFixed {
         width: 30%;
     }
-    .NavbarFixed{
+    .NavbarFixed {
         justify-content: space-between;
     }
     .Logo {
         width: 70%;
     }
-
     .BurgerMenu {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .categoriaMenu {
+        display: none;
     }
 }

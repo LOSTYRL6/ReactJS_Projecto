@@ -2,14 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  h1{
+}
+h1 {
     font-family: "Cinzel", serif;
     font-optical-sizing: auto;
     font-style: normal;
-  }
+}
 
-  body {
+body {
     margin: 0;
     height: auto;
     position: relative; /* Necesario para posicionar la imagen absoluta */
@@ -25,7 +25,7 @@
     opacity: 0.95;
 }
 
-.ContenidoMain{
+.ContenidoMain {
     width: 100%;
     height: auto;
     justify-content: center;
@@ -37,10 +37,45 @@
     padding: 10px;
 }
 
-.AuthContenido{
+.AuthContenido {
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+.ContenedorIconoUsuario {
+    width: 70%;
+    position: relative;
+    height: 95%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: solid black 1px;
+    text-align: center;
+}
+.ColorName {
+    color: orangered;
+    text-shadow: 0 0 10px rgba(255, 80, 0, 0.8);
+}
+.Salir {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ContenedorIconoUsuario .TuIcono {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+}
+.OpciondeUsuario {
+    display: none;
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1212129f;
 }
