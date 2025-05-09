@@ -6,11 +6,12 @@ use App\Models\Usuario;
 use App\Clases\Utilidad;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UsuarioResource;
 use Illuminate\Database\QueryException;
 
-class UsuarioController extends Controller
+class ApiUsuarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,7 +38,7 @@ class UsuarioController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
-            $file->storeAs('',$fileName, 'public');
+            $file->storeAs('', $fileName, 'public');
             $usuarios->imagen_icono = 'imagen/media/' . $fileName;
         }
 
@@ -49,6 +50,42 @@ class UsuarioController extends Controller
             $response = \response()->json(["error" => $mensaje], 400);
         }
         return $response;
+    }
+
+    public function Logear(Request $request)
+    {
+        try {
+            $UserCorreo = $request->input('UsernameCorreo');
+            $contrasena = $request->input('contrasena');
+
+            $usuario = Usuario::where('username', $UserCorreo)
+                ->orWhere('correo', $UserCorreo)
+                ->first();
+
+            if (!$usuario) {
+                return response()->json(['error' => 'Usuario no encontrado'], 404);
+            }
+
+            // Verificar contraseña
+            if (!Hash::check($contrasena, $usuario->contrasena)) {
+                return response()->json(['error' => 'Contraseña incorrecta'], 401);
+            }
+
+            Auth::login($usuario);
+
+            return response()->json([
+                'mensaje' => 'Inicio de sesión exitoso',
+                'usuario' => $usuario
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al iniciar sesión',
+                'mensaje' => $e->getMessage(),
+                'linea' => $e->getLine(),
+                'archivo' => $e->getFile(),
+                'trace' => $e->getTraceAsString(),
+            ], 500);
+        }
     }
 
     /**

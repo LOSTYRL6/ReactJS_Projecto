@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
-Route::get('/Iniciar', function () {
-    return view('Auth.Iniciar');
-});
-
 Route::get('/Registrar', function () {
     return view('Auth.register');
 });
+Route::get('/Iniciar', [UsuarioController::class, 'showLoginForm']);
+Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
+Route::post('/Login', [UsuarioController::class, 'Logear']);
