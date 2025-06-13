@@ -1,0 +1,60 @@
+.MenuDeLosJuegos {
+    width: 95%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.ContenidoDelJuegos {
+    width: 80%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.juego-img {
+    width: 100%;
+    height: 250px;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 0 10px white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.juego-card a {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.juego-img:hover {
+    transform: scale(1.05); /* Efecto de zoom */
+    box-shadow: 0 0 20px 10px #fff; /* Más brillo */
+}
+.juegos-grid {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.juego-card {
+    width: 45%;
+    height: 300px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+}
+.ContenidoDelJuegos h2 {
+    font-size: 45px;
+    margin: 20px;
+}
+.ContenidoDelJuegos h3 {
+    font-size: 27px;
+}

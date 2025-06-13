@@ -1,7 +1,7 @@
 .NavbarSouls {
     width: 100%;
     height: 125px;
-    background-color: #1212129f;
+    background-color: #b0b0b067;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -14,7 +14,7 @@
     left: 0;
     width: 100%;
     height: 100px;
-    background-color: #1212129f;
+    background-color: #b0b0b067;
     color: white;
     display: flex;
     align-items: center;
@@ -27,7 +27,7 @@
     width: 100%;
     height: 250px;
     display: flex;
-    background-color: #1212129f;
+    background-color: #b0b0b067;
     color: white;
 }
 
@@ -51,6 +51,12 @@
 .Logo button {
     width: 100px;
     height: 50%;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
 }
 
 .Menu {
@@ -117,7 +123,7 @@
     display: none;
     flex-direction: column;
     gap: 20px;
-    background-color: #1212129f;
+    background-color: #b0b0b067;
     color: white;
     padding: 20px;
     position: absolute;
@@ -132,7 +138,7 @@
     right: 0;
     height: 100vh;
     width: 100%; /* puedes usar 80% si prefieres */
-    background-color: #121212d8;
+    background-color: #b0b0b067;
     color: white;
     flex-direction: column;
     justify-content: center;

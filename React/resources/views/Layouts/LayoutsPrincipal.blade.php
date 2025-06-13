@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
     <title>Mi primer Componente</title>
     @viteReactRefresh
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/navbar.css', 'resources/css/Auth.css', 'resources/js/main.js', 'resources/js/Auth.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/navbar.css', 'resources/css/Auth.css', 'resources/css/MenuSouls.css', 'resources/js/main.js', 'resources/js/Auth.js'])
 </head>
 
 <body>
@@ -21,7 +21,8 @@
             <img src="{{ asset('imagen/logo/SoulsHUBPNG.png') }}" alt="Logo" class="LogoImage">
             @if (Auth::check())
                 <div class="ContenedorIconoUsuario">
-                    <img src="{{ asset(Auth::user()->imagen_icono) }}" alt="Icono Usuario" class="TuIcono">
+                    <img src="{{ Auth::user()->imagen_icono ? asset(Auth::user()->imagen_icono) : asset('imagen/logo/mini.png') }}"
+                        alt="Icono Usuario" class="TuIcono">
                     <h1>Welcome Back <span class="ColorName"> {{ Auth::user()->nombre }}</span> </h1>
                     <div class="OpciondeUsuario">
                         <div class="Salir">
