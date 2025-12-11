@@ -14,7 +14,7 @@ class PaginaController extends Controller
      */
     public function index()
     {
-        $pagina = Pagina::all();
+        $pagina = Pagina::with('subpaginas')->get();
         return PaginaResource::collection($pagina);
     }
 

@@ -34,10 +34,12 @@ class PaginaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pagina $pagina)
+    public function show($id)
     {
-        //
+        $pagina = Pagina::with('juego')->findOrFail($id);
+        return view('SubPagina', compact('pagina'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

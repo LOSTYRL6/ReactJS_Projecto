@@ -25,12 +25,49 @@
 
 .FooterContenido {
     width: 100%;
-    height: 250px;
+    height: 205px;
     display: flex;
     background-color: #b0b0b067;
     color: white;
+    justify-content: space-around;
+    align-items: center;
+}
+.Footernivel1,
+.Footernivel2 {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.footernivel11 {
+    width: 80%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.footernivel11 p {
+    margin: 0;
+    padding: 0 10px;
 }
 
+.footernivel11 p:not(:last-child) {
+    border-right: 1px solid #000;
+}
+
+.RedesSociales {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.RedesSociales img {
+    width: 50px;
+    height: 50px;
+}
 .Logo {
     width: 30%;
     height: 80%;
@@ -38,10 +75,14 @@
     justify-content: space-around;
     align-items: center;
 }
+.EnlazeImagenes {
+    width: auto;
+    height: auto;
+}
 
-.Logo .LogoImage {
+.LogoImage {
     width: 100px;
-    height: 90%;
+    height: 90px;
 }
 .NavbarFixed img {
     width: 100px;
@@ -137,7 +178,7 @@
     top: 0;
     right: 0;
     height: 100vh;
-    width: 100%; /* puedes usar 80% si prefieres */
+    width: 100%;
     background-color: #b0b0b067;
     color: white;
     flex-direction: column;
@@ -173,7 +214,6 @@
     align-items: center;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .Menu {
         display: none;
@@ -194,5 +234,12 @@
     }
     .categoriaMenu {
         display: none;
+    }
+    .footernivel11 h1 {
+        font-size: 20px;
+    }
+    .footernivel11 img {
+        width: 25px;
+        height: 25px;
     }
 }

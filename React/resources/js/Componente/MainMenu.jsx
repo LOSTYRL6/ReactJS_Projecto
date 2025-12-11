@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import "../../css/MenuSouls.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import axios from "axios";
@@ -12,7 +11,7 @@ export default function MainMenu() {
 
     useEffect(() => {
         axios
-            .get("juego")
+            .get("api/juego")
             .then((response) => {
                 setJuegos(response.data);
             })
@@ -25,20 +24,27 @@ export default function MainMenu() {
         <div className="ContenidoDelJuegos">
             <h2>Lista de Juegos</h2>
             <div className="juegos-grid">
-                {juegos.map((juego) => (
-                    <div key={juego.id_juego} className="juego-card">
-                        <h3>{juego.nombre}</h3>
-                        <a
-                            href={`./juegos/${juego.id_juego}`}
-                        >
-                            <img
-                                src={`./imagen/game/${juego.imagen}`}
-                                alt={juego.nombre}
-                                className="juego-img"
-                            />
-                        </a>
-                    </div>
-                ))}
+                {juegos.map((juego) => {
+                    const paginaInicio = juego.paginas?.find(
+                        (p) => p.nombre === "Inicio"
+                    );
+                    return (
+                        <div key={juego.id_juego} className="juego-card">
+                            <h3>{juego.nombre}</h3>
+                            {paginaInicio && (
+                                <a
+                                    href={`./juegos/${juego.id_juego}/${paginaInicio.id_pagina}`}
+                                >
+                                    <img
+                                        src={`./imagen/game/${juego.imagen}`}
+                                        alt={juego.nombre}
+                                        className="juego-img"
+                                    />
+                                </a>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

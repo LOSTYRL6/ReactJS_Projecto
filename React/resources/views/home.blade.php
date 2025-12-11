@@ -5,12 +5,6 @@
 @endsection
 
 @section('LayoustMain')
-    @if (Auth::check())
-        <h1>Bienvenido, {{ Auth::user()->username }}</h1>
-    @else
-        <p>No has iniciado sesión.</p>
-    @endif
-
     <div id="MenuSouls" class="MenuDeLosJuegos">
 
     </div>

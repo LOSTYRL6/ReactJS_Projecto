@@ -13,6 +13,7 @@ body {
     margin: 0;
     height: auto;
     position: relative; /* Necesario para posicionar la imagen absoluta */
+    padding-bottom: 20px;
 }
 .background-img {
     position: absolute;
@@ -20,7 +21,6 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     z-index: -1;
     opacity: 0.95;
 }
@@ -35,6 +35,7 @@ body {
     color: white;
     flex-direction: column;
     padding: 10px;
+    text-align: center;
 }
 .ContenidoMain h1 {
     font-size: 60px;
@@ -54,7 +55,6 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border: solid black 1px;
     text-align: center;
 }
 .ColorName {
@@ -80,7 +80,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #b0b0b067;
+    background-color: #68686867;
     justify-content: center;
     align-items: center;
 }
