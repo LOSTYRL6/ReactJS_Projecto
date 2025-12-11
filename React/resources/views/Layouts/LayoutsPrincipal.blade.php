@@ -18,7 +18,8 @@
     @yield('Imagenfondo')
     <nav class="NavbarSouls">
         <div class="Logo">
-            <img src="{{ asset('imagen/logo/SoulsHUBPNG.png') }}" alt="Logo" class="LogoImage">
+            <a href="{{ url('/') }}" class="EnlazeImagenes">
+                <img src="{{ asset('imagen/logo/SoulsHUBPNG.png') }}" alt="Logo" class="LogoImage"></a>
             @if (Auth::check())
                 <div class="ContenedorIconoUsuario">
                     <img src="{{ Auth::user()->imagen_icono ? asset(Auth::user()->imagen_icono) : asset('imagen/logo/mini.png') }}"
@@ -56,7 +57,8 @@
     </div>
 
     <nav class="NavbarFixed" id="navbarFixed">
-        <img src="{{ asset('imagen/logo/SoulsHUBPNG.png') }}" alt="Logo" class="d-md-none">
+        <a href="{{ url('/') }}" class="EnlazeImagenes">
+            <img src="{{ asset('imagen/logo/SoulsHUBPNG.png') }}" alt="Logo" class="LogoImage"></a>
 
         <div class="MenuFixed d-flex justify-content-between align-items-center w-100">
             <div class="categoriaMenu">
@@ -80,8 +82,38 @@
     <main class="ContenidoMain">
         @yield('LayoustMain')
     </main>
+    <section class="Comentario">
+        @yield('UsuariosComentarios')
+    </section>
     <footer class="FooterContenido">
-        Footer
+        <div class="Footernivel1">
+            <div class="footernivel11">
+                <img src="{{ asset('imagen/logo/SoulsHUBPNG.png') }}" alt="Logo" class="LogoImage">
+                <h1>Souls Hub</h1>
+            </div>
+            <div class="footernivel11">
+                <p>home</p>
+                <p>Hellothere</p>
+                <p>Sobre nosotros</p>
+            </div>
+            <div class="footernivel11">
+                <p> Contributions to SoulsHub are licensed under a Custom License.</p>
+            </div>
+
+        </div>
+        <div class="Footernivel2">
+            <div class="footernivel11">
+                <h1>Copyright © SoulsHub 2025</h1>
+            </div>
+            <div class="footernivel11">
+                Follow us on
+                <span class="RedesSociales">
+                    <img src="{{ asset('imagen/media/youtube.png') }}" alt="Logo" class="LogoImage">
+                    <img src="{{ asset('imagen/media/gorjeo.png') }}" alt="Logo" class="LogoImage">
+                    <img src="{{ asset('imagen/media/instagram.png') }}" alt="Logo" class="LogoImage">
+                </span>
+            </div>
+        </div>
     </footer>
 </body>
 

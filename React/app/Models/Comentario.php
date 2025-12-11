@@ -35,6 +35,7 @@ class Comentario extends Model
 
     public function respuestas()
     {
-        return $this->hasMany(Comentario::class, 'parent_id');
+        return $this->hasMany(Comentario::class, 'parent_id')
+            ->with(['usuario', 'respuestas', 'parent']);
     }
 }

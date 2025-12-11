@@ -1,0 +1,472 @@
+import React, { useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import axios from "axios";
+
+import "../../css/MenuSouls.css";
+
+export default function ComentariosSeccion() {
+    const [juego, setJuego] = useState(null);
+    const [pagina, setPagina] = useState(null);
+    const [user, setUser] = useState(null);
+    const [comentarios, setComentarios] = useState([]);
+    // replyModes ahora es objeto con índice → { reply: bool, see: bool }
+    const [replyModes, setReplyModes] = useState({});
+    const [replyTexts, setReplyTexts] = useState({});
+
+    useEffect(() => {
+        const comentariosDiv = document.getElementById("ComentariosSeccion");
+        if (comentariosDiv) {
+            try {
+                setJuego(JSON.parse(comentariosDiv.dataset.juego));
+                setPagina(JSON.parse(comentariosDiv.dataset.pagina));
+                setUser(JSON.parse(comentariosDiv.dataset.user));
+            } catch (error) {
+                console.error("Error parsing data attributes:", error);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (pagina && pagina.id_pagina) {
+            axios
+                .get(`api/comentario?id_pagina=${pagina.id_pagina}`)
+                .then((response) => {
+                    setComentarios(response.data);
+                })
+                .catch((error) => {
+                    console.error("Error al obtener los comentarios:", error);
+                });
+        }
+    }, [pagina]);
+
+    // Función toggle para reply o see según tipo
+    const abrirCerrarModo = (index, tipo) => {
+        setReplyModes((prev) => {
+            const estadoActual = prev[index] || { reply: false, see: false };
+            return {
+                ...prev,
+                [index]: {
+                    ...estadoActual,
+                    [tipo]: !estadoActual[tipo], // Alterna true/false
+                },
+            };
+        });
+    };
+
+    const handleReplyChange = (index, text) => {
+        setReplyTexts((prev) => ({
+            ...prev,
+            [index]: text,
+        }));
+    };
+
+    const enviarReply = (index, parentId) => {
+        const texto = replyTexts[index];
+        if (!texto || texto.trim() === "") {
+            alert("Escribe un comentario.");
+            return;
+        }
+
+        axios
+            .post("/comentarios/reply", {
+                comentario: texto,
+                parent_id: parentId,
+                id_pagina: pagina.id_pagina,
+            })
+            .then(() => {
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.error("Error enviando reply:", err);
+                alert("Error enviando el comentario.");
+            });
+    };
+
+    const renderComentario = (comentario, nivel = 0) => {
+        const modos = replyModes[comentario.id_comentario] || {
+            reply: false,
+            see: false,
+        };
+
+        return (
+            <div
+                key={comentario.id_comentario}
+                style={{ marginLeft: `${nivel * 20}px` }}
+            >
+                <div className="comentario-item">
+                    <div className="comentario-user">
+                        <strong>
+                            {comentario.usuario?.nombre || "Usuario"}
+                        </strong>
+                        <img
+                            src={
+                                comentario.usuario?.imagen_icono
+                                    ? `../../imagen/logoUser/${comentario.usuario.imagen_icono}`
+                                    : "../../imagen/logo/mini.png"
+                            }
+                            alt="icono"
+                            className="icono-usuario"
+                        />
+                    </div>
+                    <div className="comentario-text">
+                        <p>{comentario.comentario}</p>
+                    </div>
+
+                    <div className="SeccionDeResponderYVEr">
+                        {user && (
+                            <button
+                                className="Responder"
+                                onClick={() =>
+                                    abrirCerrarModo(
+                                        comentario.id_comentario,
+                                        "reply"
+                                    )
+                                }
+                            >
+                                <img
+                                    src="../../../public/imagen/logo/text-message.png"
+                                    alt=""
+                                />
+                                Reply
+                            </button>
+                        )}
+
+                        {comentario.respuestas?.length > 0 && (
+                            <button
+                                className="Responder"
+                                onClick={() =>
+                                    abrirCerrarModo(
+                                        comentario.id_comentario,
+                                        "see"
+                                    )
+                                }
+                            >
+                                <img
+                                    src="../../../public/imagen/logo/visible.png"
+                                    alt=""
+                                />
+                                Ver respuestas
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Zona reply */}
+                {modos.reply && (
+                    <div
+                        className="ResponderComentario"
+                        style={{ marginTop: "5px" }}
+                    >
+                        <input
+                            type="text"
+                            value={replyTexts[comentario.id_comentario] || ""}
+                            onChange={(e) =>
+                                handleReplyChange(
+                                    comentario.id_comentario,
+                                    e.target.value
+                                )
+                            }
+                        />
+                        <button
+                            className="enviar-reply"
+                            onClick={() =>
+                                enviarReply(
+                                    comentario.id_comentario,
+                                    comentario.id_comentario
+                                )
+                            }
+                        >
+                            Enviar
+                        </button>
+                    </div>
+                )}
+
+                {/* Zona ver respuestas */}
+                {modos.see &&
+                    comentario.respuestas &&
+                    comentario.respuestas.length > 0 && (
+                        <div
+                            className="ver-replies"
+                            style={{ marginTop: "5px" }}
+                        >
+                            {comentario.respuestas.map((respuesta) =>
+                                renderComentario(respuesta, nivel + 1)
+                            )}
+                        </div>
+                    )}
+            </div>
+        );
+    };
+
+    return (
+        <div className="ComentariosSeccion2">
+            {comentarios.length > 0 ? (
+                comentarios.map((comentario, index) => {
+                    const modos = replyModes[index] || {
+                        reply: false,
+                        see: false,
+                    };
+
+                    return (
+                        <React.Fragment key={comentario.id_comentario}>
+                            <div className="comentario-item">
+                                <div className="comentario-user">
+                                    <strong>
+                                        {comentario.usuario?.nombre ||
+                                            "Usuario"}
+                                    </strong>
+                                    <img
+                                        src={
+                                            comentario.usuario?.imagen_icono
+                                                ? `../../imagen/logoUser/${comentario.usuario.imagen_icono}`
+                                                : "../../imagen/logo/mini.png"
+                                        }
+                                        alt="icono"
+                                        className="icono-usuario"
+                                    />
+                                </div>
+                                <div className="comentario-text">
+                                    <p>{comentario.comentario}</p>
+                                </div>
+                                <div className="SeccionDeResponderYVEr">
+                                    {user && (
+                                        <button
+                                            className="Responder"
+                                            onClick={() =>
+                                                abrirCerrarModo(index, "reply")
+                                            }
+                                        >
+                                            <img
+                                                src="../../../public/imagen/logo/text-message.png"
+                                                alt=""
+                                            />
+                                            Reply
+                                        </button>
+                                    )}
+
+                                    {comentario.respuestas?.length > 0 && (
+                                        <button
+                                            className="Responder"
+                                            onClick={() =>
+                                                abrirCerrarModo(index, "see")
+                                            }
+                                        >
+                                            <img
+                                                src="../../../public/imagen/logo/visible.png"
+                                                alt=""
+                                            />
+                                            Ver respuestas
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div
+                                className="ReplySeccionOrAnswer"
+                                style={{
+                                    display:
+                                        modos.reply || modos.see
+                                            ? "flex"
+                                            : "none",
+                                    flexDirection: "column",
+                                }}
+                            >
+                                {modos.reply && (
+                                    <div className="ResponderComentario">
+                                        <input
+                                            type="text"
+                                            value={replyTexts[index] || ""}
+                                            onChange={(e) =>
+                                                handleReplyChange(
+                                                    index,
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                        <button
+                                            className="enviar-reply"
+                                            onClick={() =>
+                                                enviarReply(
+                                                    index,
+                                                    comentario.id_comentario
+                                                )
+                                            }
+                                        >
+                                            Enviar
+                                        </button>
+                                    </div>
+                                )}
+
+                                {modos.see && (
+                                    <div className="ver-replies">
+                                        {comentario.respuestas.map(
+                                            (respuesta) => {
+                                                const modosRespuesta =
+                                                    replyModes[
+                                                        respuesta.id_comentario
+                                                    ] || {
+                                                        reply: false,
+                                                    };
+
+                                                return (
+                                                    <div
+                                                        key={
+                                                            respuesta.id_comentario
+                                                        }
+                                                        className="comentario-respuesta"
+                                                        style={{
+                                                            marginLeft: "20px",
+                                                        }}
+                                                    >
+                                                        <div className="comentariosSeccionCadaUno">
+                                                            <div className="comentario-user">
+                                                                <strong>
+                                                                    {respuesta
+                                                                        .usuario
+                                                                        ?.nombre ||
+                                                                        "Usuario"}
+                                                                </strong>
+                                                                <img
+                                                                    src={
+                                                                        respuesta
+                                                                            .usuario
+                                                                            ?.imagen_icono
+                                                                            ? `../../imagen/logoUser/${respuesta.usuario.imagen_icono}`
+                                                                            : "../../imagen/logo/mini.png"
+                                                                    }
+                                                                    alt="icono"
+                                                                    className="icono-usuario"
+                                                                />
+                                                            </div>
+                                                            <div className="comentario-text">
+                                                                <p>
+                                                                    {
+                                                                        respuesta.comentario
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        {modosRespuesta.reply && (
+                                                            <div
+                                                                className="ResponderComentario"
+                                                                style={{
+                                                                    marginLeft:
+                                                                        "20px",
+                                                                }}
+                                                            >
+                                                                <input
+                                                                    type="text"
+                                                                    value={
+                                                                        replyTexts[
+                                                                            respuesta
+                                                                                .id_comentario
+                                                                        ] || ""
+                                                                    }
+                                                                    onChange={(
+                                                                        e
+                                                                    ) =>
+                                                                        handleReplyChange(
+                                                                            respuesta.id_comentario,
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <button
+                                                                    className="enviar-reply"
+                                                                    onClick={() =>
+                                                                        enviarReply(
+                                                                            respuesta.id_comentario,
+                                                                            respuesta.id_comentario /* Aquí corregimos abajo */
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Enviar
+                                                                </button>
+                                                            </div>
+                                                        )}
+
+                                                        {/* Aquí mostramos las subrespuestas de la respuesta directamente */}
+                                                        {respuesta.respuestas
+                                                            ?.length > 0 && (
+                                                            <div
+                                                                className="ver-replies"
+                                                                style={{
+                                                                    marginLeft:
+                                                                        "20px",
+                                                                }}
+                                                            >
+                                                                {respuesta.respuestas.map(
+                                                                    (
+                                                                        subrespuesta
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                subrespuesta.id_comentario
+                                                                            }
+                                                                            className="comentario-respuesta2"
+                                                                            style={{
+                                                                                marginLeft:
+                                                                                    "20px",
+                                                                            }}
+                                                                        >
+                                                                            <div className="comentario-user">
+                                                                                <strong>
+                                                                                    {subrespuesta
+                                                                                        .usuario
+                                                                                        ?.nombre ||
+                                                                                        "Usuario"}
+                                                                                </strong>
+                                                                                <img
+                                                                                    src={
+                                                                                        subrespuesta
+                                                                                            .usuario
+                                                                                            ?.imagen_icono
+                                                                                            ? `../../imagen/logoUser/${subrespuesta.usuario.imagen_icono}`
+                                                                                            : "../../imagen/logo/mini.png"
+                                                                                    }
+                                                                                    alt="icono"
+                                                                                    className="icono-usuario"
+                                                                                />
+                                                                            </div>
+                                                                            <div className="comentario-text">
+                                                                                <p>
+                                                                                    {
+                                                                                        subrespuesta.comentario
+                                                                                    }
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            }
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </React.Fragment>
+                    );
+                })
+            ) : (
+                <p style={{ color: "#aaa", textAlign: "center" }}>
+                    No hay comentarios aún.
+                </p>
+            )}
+        </div>
+    );
+}
+
+if (document.getElementById("ComentariosSeccion")) {
+    createRoot(document.getElementById("ComentariosSeccion")).render(
+        <ComentariosSeccion />
+    );
+}
+
+
+

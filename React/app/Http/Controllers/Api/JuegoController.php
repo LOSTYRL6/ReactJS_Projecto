@@ -14,8 +14,9 @@ class JuegoController extends Controller
      */
     public function index()
     {
-        $juego = Juego::all();
-        return JuegoResource::collection($juego);
+        $juegos = Juego::with('paginas')->get();
+
+        return response()->json($juegos);
     }
 
     /**
